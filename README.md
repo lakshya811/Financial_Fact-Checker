@@ -20,12 +20,11 @@ Deploy the model in a scalable, production-ready environment.
 
 ### Name: Fin-Fact
 
-### Description: The dataset contains 3562 claims from various financial sectors, annotated with text, images, evidence, justifications, and more. The dataset includes:
+### Description: The dataset contains 3562 claims from various financial sectors, annotated with text, images, evidence, justifications, and more.
 
 ### Claims and associated justifications.
 Images with captions and visualization bias labels.
 Various financial sectors represented in the claims.
-Download: The dataset can be downloaded from here.
 
 ### Dataset Structure:
 
@@ -35,7 +34,7 @@ Image href & Caption: The image associated with the claim.
 Justification: Explanation of why the claim is true or false.
 Claim Label: True or False label for each claim.
 
-## Model Architecture :
+## Model Architecture 
 
 The project uses a multi-modal approach to fact-checking, integrating visual and textual data through a transformer-based model. Below are the main components:
 
