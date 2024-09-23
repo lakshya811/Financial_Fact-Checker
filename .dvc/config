@@ -1,0 +1,5 @@
+[core]
+    remote = azure-remote
+['remote "azure-remote"']
+    url = azure://datafinsure
+    account_name = finsure
