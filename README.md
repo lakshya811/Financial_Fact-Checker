@@ -44,3 +44,6 @@ Textual Feature Extraction: Utilizes pre-trained models like BERT or RoBERTa for
 Visual Feature Extraction: Pre-trained models like ResNet or ViT are used to extract features from associated images.
 Feature Fusion: The textual and visual features are combined using a transformer-based architecture, allowing for cross-modal attention.
 Classification: The fused features are passed through a classifier to predict whether the financial claim is true or false.
+![mlops drawio](https://github.com/user-attachments/assets/34f0b4c8-9d95-456e-87c0-c33e32a26299)
+
+
