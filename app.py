@@ -10,13 +10,13 @@ import streamlit as st
 
 
 # Load models for different fusion techniques
-early_model = load('C:\\Users\\laksh\\Downloads\\mlops\\early_model.joblib')
+early_model = load('early_model.joblib')
 late_model_text = load(
-    'C:\\Users\\laksh\\Downloads\\mlops\\late_model_text.joblib')
+    'late_model_text.joblib')
 late_model_image = load(
-    'C:\\Users\\laksh\\Downloads\\mlops\\late_model_image.joblib')
+    'late_model_image.joblib')
 hybrid_model = load_model(
-    'C:\\Users\\laksh\\Downloads\\mlops\\hybrid_model.h5')
+    'hybrid_model.h5')
 
 # Load pretrained models for feature extraction
 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
