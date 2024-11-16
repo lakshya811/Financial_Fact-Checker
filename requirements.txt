@@ -4,3 +4,9 @@ transformers
 Pillow
 tensorflow
 joblib
+scikit-learn
+numpy
+tensorflow_hub
+pandas
+keras
+typing-extensions
