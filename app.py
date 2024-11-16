@@ -8,16 +8,24 @@ from tensorflow.keras.models import load_model
 from joblib import load
 import streamlit as st
 
-
 # Load models for different fusion techniques
-early_model = load('early_model.joblib')
+# early_model = load(
+#     'C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Financial_Fact-Checker\\early_model.joblib')
+# late_model_text = load(
+#     'C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Financial_Fact-Checker\\late_model_text.joblib')
+# late_model_image = load(
+#     'C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Financial_Fact-Checker\\late_model_image.joblib')
+# hybrid_model = load_model(
+#     'C:\\Users\\laksh\\OneDrive\\Documents\\GitHub\\Financial_Fact-Checker\\hybrid_model.h5')
+
+early_model = load(
+    'early_model.joblib')
 late_model_text = load(
     'late_model_text.joblib')
 late_model_image = load(
     'late_model_image.joblib')
 hybrid_model = load_model(
     'hybrid_model.h5')
-
 # Load pretrained models for feature extraction
 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
 text_model = DistilBertModel.from_pretrained('distilbert-base-uncased')
@@ -44,6 +52,11 @@ def get_image_features(image_path):
 def predict_early_fusion(claim, image_path):
     text_features = get_text_features(claim)
     image_features = get_image_features(image_path)
+
+    # Ensure both have the same dimensions
+    if text_features.ndim == 2 and image_features.ndim == 1:
+        image_features = np.expand_dims(image_features, axis=0)
+
     combined_features = np.concatenate([text_features, image_features], axis=1)
     prediction = early_model.predict(combined_features)
     return prediction
@@ -52,14 +65,33 @@ def predict_early_fusion(claim, image_path):
 def predict_late_fusion(claim, image_path):
     text_features = get_text_features(claim)
     image_features = get_image_features(image_path)
+
+    # Ensure `text_features` and `image_features` are 2D for prediction
+    # Reshape to (1, num_features) if needed
+    text_features = text_features.reshape(1, -1)
+    # Reshape to (1, num_features) if needed
+    image_features = image_features.reshape(1, -1)
+
+    # Make predictions with text and image models
     text_pred = late_model_text.predict(text_features)
     image_pred = late_model_image.predict(image_features)
-    return int((text_pred + image_pred) / 2 > 0.5)  # Averaged soft voting
+
+    # Combine predictions with averaged soft voting
+    return int((text_pred + image_pred) / 2 > 0.5)
 
 
 def predict_hybrid_fusion(claim, image_path):
+    # Get text and image features
     text_features = get_text_features(claim)
     image_features = get_image_features(image_path)
+
+    # Ensure both features are 2D with the same number of samples (1 sample here)
+    # Reshape to (1, num_text_features)
+    text_features = text_features.reshape(1, -1)
+    image_features = image_features.reshape(
+        1, -1)  # Reshape to (1, num_image_features)
+
+    # Make prediction with the hybrid model
     prediction = hybrid_model.predict([text_features, image_features])
     return np.argmax(prediction)
 
